@@ -1,3 +1,5 @@
+import type { MouseEvent } from 'react'
+import { Document, Page, StyleSheet, Text, View, pdf } from '@react-pdf/renderer'
 import './App.css'
 
 const linkedInUrl = 'https://www.linkedin.com/in/william-brandi-7132a7206/'
@@ -15,8 +17,43 @@ const experience = [
 
 const skills = ['JavaScript', 'C#', 'HTML5', 'Firebase', 'Cloudflare', 'Software testing', 'Mobile application development']
 
+const pdfStyles = StyleSheet.create({
+  page: { padding: 42, color: '#171916', fontFamily: 'Helvetica' },
+  header: { borderBottom: '2 solid #171916', paddingBottom: 16, marginBottom: 22 },
+  name: { fontSize: 28, fontFamily: 'Helvetica-Bold' },
+  title: { fontSize: 11, color: '#4d534c', marginTop: 6 },
+  contact: { fontSize: 8, color: '#4d534c', marginTop: 10 },
+  columns: { flexDirection: 'row', gap: 24 },
+  left: { width: '34%' },
+  right: { width: '66%' },
+  heading: { fontSize: 9, fontFamily: 'Helvetica-Bold', color: '#5d655c', marginBottom: 8, letterSpacing: 1 },
+  paragraph: { fontSize: 9, color: '#4d534c', lineHeight: 1.5, marginBottom: 20 },
+  skill: { fontSize: 9, color: '#4d534c', marginBottom: 6 },
+  job: { marginBottom: 12 },
+  role: { fontSize: 10, fontFamily: 'Helvetica-Bold' },
+  company: { fontSize: 8, color: '#5d655c', marginTop: 3 },
+})
+
+function ResumeDocument() {
+  return <Document title="William Brandi Resume" author="William Brandi"><Page size="LETTER" style={pdfStyles.page}>
+    <View style={pdfStyles.header}><Text style={pdfStyles.name}>William Brandi</Text><Text style={pdfStyles.title}>Self-taught web, app, and software developer</Text><Text style={pdfStyles.contact}>{contactEmail}  |  Aberdeen, Maryland  |  linkedin.com/in/william-brandi-7132a7206</Text></View>
+    <View style={pdfStyles.columns}><View style={pdfStyles.left}><Text style={pdfStyles.heading}>PROFILE</Text><Text style={pdfStyles.paragraph}>Self-taught developer learning since 2018 and building since 2021. Founder and lead developer of RNDM Junk LLC, creating practical web and app experiences with persistence, creativity, and a willingness to solve the next problem.</Text><Text style={pdfStyles.heading}>SKILLS</Text>{skills.map((skill) => <Text style={pdfStyles.skill} key={`pdf-${skill}`}>{skill}</Text>)}</View><View style={pdfStyles.right}><Text style={pdfStyles.heading}>EXPERIENCE</Text>{experience.map((job) => <View style={pdfStyles.job} key={`pdf-job-${job.company}-${job.role}`}><Text style={pdfStyles.role}>{job.role}</Text><Text style={pdfStyles.company}>{job.company}  |  {job.date}</Text></View>)}</View></View>
+  </Page></Document>
+}
+
 function App() {
-  const printResume = () => window.print()
+  const downloadResume = async (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    const resumeBlob = await pdf(<ResumeDocument />).toBlob()
+    const downloadUrl = URL.createObjectURL(resumeBlob)
+    const link = document.createElement('a')
+    link.href = downloadUrl
+    link.download = 'William-Brandi-Resume.pdf'
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000)
+  }
 
   return (
     <main>
@@ -26,7 +63,7 @@ function App() {
           <a href="#work">Work</a>
           <a href="#experience">Experience</a>
           <a href="#about">About</a>
-          <a className="nav-contact" href="#resume" onClick={printResume}>Download resume <span aria-hidden="true">↓</span></a>
+          <a className="nav-contact" href="#resume" onClick={downloadResume}>Download resume <span aria-hidden="true">↓</span></a>
         </nav>
       </header>
 
