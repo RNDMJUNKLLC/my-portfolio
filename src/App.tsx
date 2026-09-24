@@ -5,16 +5,17 @@ const linkedInUrl = 'https://www.linkedin.com/in/william-brandi-7132a7206/'
 const contactEmail = 'william@rndmdevs.com'
 
 const experience = [
-  { date: '2026 - present', role: 'Small Format Merchandiser', company: 'Pepsi-Cola Bottling Company of Havre de Grace', tag: 'Cold storage · Customer satisfaction' },
-  { date: '2020 - present', role: 'Founder / Lead Developer', company: 'RNDM Junk LLC', tag: 'C# · HTML5 · Web development' },
-  { date: '2024 - 2026', role: 'Warehouse Associate', company: 'Wayfair', tag: 'Operations · Reliability' },
-  { date: '2023 - 2024', role: 'Commission Sales Associate', company: 'AT&T', tag: 'Sales · Customer service' },
-  { date: '2021 - 2023', role: 'Associate', company: 'Amazon', tag: 'Maintenance · Operations' },
-  { date: '2021 - 2023', role: 'Assistant Manager', company: "Domino's Pizza", tag: 'Management · Operations' },
-  { date: '2019 - 2020', role: 'Manager', company: "Dunkin' Brands", tag: 'Management' },
+  { date: 'Jun 2026 - present', role: 'Small Format Merchandiser', company: 'Pepsi-Cola Bottling Company of Havre de Grace', tag: 'Cold storage · Customer satisfaction', description: 'Full-time on-site role centered on cold storage, merchandising, and customer satisfaction.' },
+  { date: 'Jul 2020 - present', role: 'Founder / Lead Developer', company: 'RNDM Junk LLC', tag: 'C# · HTML5 · Web development', description: 'Own and maintain a small-business web development venture, building and updating its online presence.' },
+  { date: 'Aug 2024 - Jun 2026', role: 'Warehouse Associate', company: 'Wayfair', tag: 'Operations · Reliability', description: 'Full-time on-site warehouse role contributing to dependable day-to-day operations.', details: ['Performed route quality checks and verified product weight for safe delivery planning.', 'Coordinated communication between teams to support seamless delivery.', 'Unloaded inbound trailers, quality-checked products, and assembled and protected furniture for shipment.'] },
+  { date: 'Feb 2023 - Jun 2024', role: 'Commission Sales Associate', company: 'AT&T', tag: 'Sales · Customer service', description: 'Customer-facing sales role focused on communication, product conversations, and service.', details: ['Managed the sales cycle from lead processing through conversion and closing.', 'Built customer and community relationships while working toward sales targets.', 'Trained new employees on customer service, cash handling, and organization strategies.'] },
+  { date: 'Jun 2021 - Dec 2023', role: 'Associate', company: 'Amazon', tag: 'Maintenance · Operations', description: 'Seasonal associate role with maintenance and operational responsibilities.', details: ['Loaded, unloaded, and moved material between storage and production areas.', 'Used warehouse equipment including pallet jacks and shrink-wrap tools.', 'Helped train new employees in safe practices and warehouse procedures.'] },
+  { date: 'Dec 2021 - Jan 2023', role: 'Assistant Manager', company: "Domino's Pizza", tag: 'Management · Operations', description: 'Full-time on-site assistant management role supporting daily operations.', details: ['Monitored cash intake and deposit records to improve accuracy and reduce discrepancies.', 'Assisted customers, completed inventory counts, and supported day-to-day operations.', 'Helped maintain performance, quality, and service expectations.'] },
+  { date: 'Sep 2019 - Apr 2020', role: 'Manager', company: "Dunkin' Brands", tag: 'Management', description: 'Full-time management role in a customer-facing operations environment.', details: ['Conducted performance evaluations and provided constructive employee feedback.', 'Created schedules, monitored call-outs, and established team priorities.', 'Opened and closed the location while monitoring shifts and operational performance.'] },
 ]
 
-const skills = ['JavaScript', 'C#', 'HTML5', 'Firebase', 'Cloudflare', 'Software testing', 'Mobile application development']
+const skills = ['JavaScript', 'C#', 'HTML5', 'Firebase', 'Cloudflare', 'Software testing', 'Mobile application development', 'Quality assurance', 'Process improvement', 'Data analysis', 'Cash handling', 'New hire training', 'Sales expertise']
+const education = 'GED · MY GED at Online · September 2021'
 
 function App() {
   const downloadResume = async (event: MouseEvent<HTMLAnchorElement>) => {
@@ -36,9 +37,12 @@ function App() {
       job: { marginBottom: 12 },
       role: { fontSize: 10, fontFamily: 'Helvetica-Bold' },
       company: { fontSize: 8, color: '#5d655c', marginTop: 3 },
+      detail: { fontSize: 8, color: '#4d534c', lineHeight: 1.35, marginTop: 3 },
     })
     const profileColumn = h(renderer.View, { style: pdfStyles.left }, h(renderer.Text, { style: pdfStyles.heading }, 'PROFILE'), h(renderer.Text, { style: pdfStyles.paragraph }, 'Self-taught developer learning since 2018 and building since 2021. Founder and lead developer of RNDM Junk LLC, creating practical web and app experiences with persistence, creativity, and a willingness to solve the next problem.'), h(renderer.Text, { style: pdfStyles.heading }, 'SKILLS'), ...skills.map((skill) => h(renderer.Text, { style: pdfStyles.skill, key: `pdf-${skill}` }, skill)))
-    const experienceColumn = h(renderer.View, { style: pdfStyles.right }, h(renderer.Text, { style: pdfStyles.heading }, 'EXPERIENCE'), ...experience.map((job) => h(renderer.View, { style: pdfStyles.job, key: `pdf-job-${job.company}-${job.role}` }, h(renderer.Text, { style: pdfStyles.role }, job.role), h(renderer.Text, { style: pdfStyles.company }, `${job.company}  |  ${job.date}`))))
+    const experienceColumn = h(renderer.View, { style: pdfStyles.right }, h(renderer.Text, { style: pdfStyles.heading }, 'EXPERIENCE'), ...experience.map((job) => h(renderer.View, { style: pdfStyles.job, key: `pdf-job-${job.company}-${job.role}` }, h(renderer.Text, { style: pdfStyles.role }, job.role), h(renderer.Text, { style: pdfStyles.company }, `${job.company}  |  ${job.date}`), h(renderer.Text, { style: pdfStyles.detail }, job.description), ...(job.details ?? []).slice(0, 3).map((detail) => h(renderer.Text, { style: pdfStyles.detail, key: detail }, `• ${detail}`)))))
+              {experience.map((job) => <article className="experience-item" key={`${job.company}-${job.role}`}><span className="experience-date">{job.date}</span><div><h3>{job.role}</h3><p>{job.company}</p><p className="experience-description">{job.description}</p>{job.details && <ul className="experience-details">{job.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>}<span className="experience-tag">{job.tag}</span></div></article>)}
+      <div className="resume-grid"><div><h3>Profile</h3><p>Self-taught developer learning since 2018 and building since 2021. Founder and lead developer of RNDM Junk LLC, combining technical problem solving with customer-focused communication and outreach.</p><h3>Target roles</h3><p>Technical Developer · Web Developer · Software Developer · Customer-Facing Technology · Sales / Customer Outreach</p><h3>Skills</h3><p>{skills.join(' · ')}</p><h3>Education</h3><p>{education}</p></div><div><h3>Experience</h3><div className="resume-jobs">{experience.map((job) => <div className="resume-job" key={`resume-${job.company}-${job.role}`}><strong>{job.role}</strong><span>{job.company} · {job.date}</span><small>{job.description}</small></div>)}</div></div></div>
     const header = h(renderer.View, { style: pdfStyles.header }, h(renderer.Text, { style: pdfStyles.name }, 'William Brandi'), h(renderer.Text, { style: pdfStyles.title }, 'Technical Developer · Web Development · Customer Outreach'), h(renderer.Text, { style: pdfStyles.contact }, `${contactEmail}  |  Aberdeen, Maryland  |  linkedin.com/in/william-brandi-7132a7206`))
     const resumeDocument = h(renderer.Document, { title: 'William Brandi Resume', author: 'William Brandi' }, h(renderer.Page, { size: 'LETTER', style: pdfStyles.page }, header, h(renderer.View, { style: pdfStyles.columns }, profileColumn, experienceColumn)))
     const resumeBlob = await renderer.pdf(resumeDocument).toBlob()
@@ -119,7 +123,7 @@ function App() {
           <p className="section-note">Experience across development, customer service, sales, warehouse operations, and maintenance.</p>
         </div>
         <div className="experience-list">
-          {experience.map((job) => <article className="experience-item" key={`${job.company}-${job.role}`}><span className="experience-date">{job.date}</span><div><h3>{job.role}</h3><p>{job.company}</p><span className="experience-tag">{job.tag}</span></div></article>)}
+          {experience.map((job) => <article className="experience-item" key={`${job.company}-${job.role}`}><span className="experience-date">{job.date}</span><div><h3>{job.role}</h3><p>{job.company}</p><p className="experience-description">{job.description}</p><span className="experience-tag">{job.tag}</span></div></article>)}
         </div>
       </section>
 
