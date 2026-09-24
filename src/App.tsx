@@ -123,7 +123,7 @@ function App() {
           <p className="section-note">Experience across development, customer service, sales, warehouse operations, and maintenance.</p>
         </div>
         <div className="experience-list">
-          {experience.map((job) => <article className="experience-item" key={`${job.company}-${job.role}`}><span className="experience-date">{job.date}</span><div><h3>{job.role}</h3><p>{job.company}</p><p className="experience-description">{job.description}</p><span className="experience-tag">{job.tag}</span></div></article>)}
+          {experience.map((job) => <article className="experience-item" key={`${job.company}-${job.role}`}><span className="experience-date">{job.date}</span><div><h3>{job.role}</h3><p>{job.company}</p><p className="experience-description">{job.description}</p>{job.details && <ul className="experience-details">{job.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>}<span className="experience-tag">{job.tag}</span></div></article>)}
         </div>
       </section>
 
