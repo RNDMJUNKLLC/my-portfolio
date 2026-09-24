@@ -1,6 +1,23 @@
 import './App.css'
 
+const linkedInUrl = 'https://www.linkedin.com/in/william-brandi-7132a7206/'
+const contactEmail = 'william@rndmdevs.com'
+
+const experience = [
+  { date: '2026 - present', role: 'Small Format Merchandiser', company: 'Pepsi-Cola Bottling Company of Havre de Grace', tag: 'Cold storage · Customer satisfaction' },
+  { date: '2020 - present', role: 'Founder / Lead Developer', company: 'RNDM Junk LLC', tag: 'C# · HTML5 · Web development' },
+  { date: '2024 - 2026', role: 'Warehouse Associate', company: 'Wayfair', tag: 'Operations · Reliability' },
+  { date: '2023 - 2024', role: 'Commission Sales Associate', company: 'AT&T', tag: 'Sales · Customer service' },
+  { date: '2021 - 2023', role: 'Associate', company: 'Amazon', tag: 'Maintenance · Operations' },
+  { date: '2021 - 2023', role: 'Assistant Manager', company: "Domino's Pizza", tag: 'Management · Operations' },
+  { date: '2019 - 2020', role: 'Manager', company: "Dunkin' Brands", tag: 'Management' },
+]
+
+const skills = ['JavaScript', 'C#', 'HTML5', 'Firebase', 'Cloudflare', 'Software testing', 'Mobile application development']
+
 function App() {
+  const printResume = () => window.print()
+
   return (
     <main>
       <header className="site-header">
@@ -9,7 +26,7 @@ function App() {
           <a href="#work">Work</a>
           <a href="#experience">Experience</a>
           <a href="#about">About</a>
-          <a className="nav-contact" href="https://www.linkedin.com/in/william-brandi-7132a7206/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+          <a className="nav-contact" href="#resume" onClick={printResume}>Download resume <span aria-hidden="true">↓</span></a>
         </nav>
       </header>
 
@@ -45,8 +62,8 @@ function App() {
         </div>
         <div className="project-grid">
           <article className="project-card project-card-featured">
-            <div className="project-visual visual-lumen"><span className="visual-orb" /><span className="visual-word">RNDM JUNK LLC</span><span className="visual-caption">A business built around curiosity.</span></div>
-            <div className="project-meta"><div><p className="project-type">Founder / lead developer · 2020 - present</p><h3>RNDM Junk</h3></div><span className="project-link" aria-hidden="true">↗</span></div>
+            <div className="project-visual visual-lumen"><img className="project-screenshot" src="/rndm-junk-home.png" alt="RNDM Development website homepage" /><span className="visual-word">RNDM JUNK LLC</span><span className="visual-caption">A business built around curiosity.</span></div>
+            <div className="project-meta"><div><p className="project-type">Founder / lead developer · 2020 - present</p><h3>RNDM Junk</h3></div><a className="project-link" href="https://rndmjunk.com/" target="_blank" rel="noreferrer" aria-label="Visit RNDM Development website">↗</a></div>
             <p className="project-description">My ongoing business and development project. I own and maintain its web presence while using it as a place to explore ideas, solve problems, and keep shipping.</p>
           </article>
           <article className="project-card">
@@ -64,20 +81,19 @@ function App() {
           <p className="section-note">Experience across development, customer service, sales, warehouse operations, and maintenance.</p>
         </div>
         <div className="experience-list">
-          <article className="experience-item experience-current"><span className="experience-date">2026 - present</span><div><h3>Small Format Merchandiser</h3><p>Pepsi-Cola Bottling Company of Havre de Grace</p><span className="experience-tag">Cold storage · Customer satisfaction</span></div></article>
-          <article className="experience-item"><span className="experience-date">2020 - present</span><div><h3>Founder / Lead Developer</h3><p>RNDM Junk LLC</p><span className="experience-tag">C# · HTML5 · Web development</span></div></article>
-          <article className="experience-item"><span className="experience-date">2024 - 2026</span><div><h3>Warehouse Associate</h3><p>Wayfair</p><span className="experience-tag">Operations · Reliability</span></div></article>
-          <article className="experience-item"><span className="experience-date">2023 - 2024</span><div><h3>Commission Sales Associate</h3><p>AT&amp;T</p><span className="experience-tag">Sales · Customer service</span></div></article>
-          <article className="experience-item"><span className="experience-date">2021 - 2023</span><div><h3>Associate</h3><p>Amazon</p><span className="experience-tag">Maintenance · Operations</span></div></article>
-          <article className="experience-item"><span className="experience-date">2021 - 2023</span><div><h3>Assistant Manager</h3><p>Domino's Pizza</p><span className="experience-tag">Management · Operations</span></div></article>
-          <article className="experience-item"><span className="experience-date">2019 - 2020</span><div><h3>Manager</h3><p>Dunkin' Brands</p><span className="experience-tag">Management</span></div></article>
+          {experience.map((job) => <article className="experience-item" key={`${job.company}-${job.role}`}><span className="experience-date">{job.date}</span><div><h3>{job.role}</h3><p>{job.company}</p><span className="experience-tag">{job.tag}</span></div></article>)}
         </div>
       </section>
 
       <section className="about-section" id="about">
         <div className="about-stamp" aria-hidden="true"><span>BUILDING</span><strong>WB</strong><span>SINCE '21</span></div>
-        <div className="about-copy"><p className="eyebrow">A little context</p><h2>Curious by default.<br /><em>Ready for the next challenge.</em></h2><p>I'm a self-taught developer who likes learning by doing. Whether I'm working on a web page, an app, or a completely unexpected side quest, I bring persistence, practical problem solving, and a willingness to go the extra mile.</p><a className="text-link" href="https://www.linkedin.com/in/william-brandi-7132a7206/" target="_blank" rel="noreferrer">Start a conversation <span aria-hidden="true">↗</span></a></div>
-        <div className="capabilities"><p className="eyebrow">Core toolkit</p><ul><li><span>01</span> JavaScript</li><li><span>02</span> C#</li><li><span>03</span> HTML5</li><li><span>04</span> Firebase / Cloudflare</li><li><span>05</span> Testing and mobile apps</li></ul></div>
+        <div className="about-copy"><p className="eyebrow">A little context</p><h2>Curious by default.<br /><em>Ready for the next challenge.</em></h2><p>I'm a self-taught developer who likes learning by doing. Whether I'm working on a web page, an app, or a completely unexpected side quest, I bring persistence, practical problem solving, and a willingness to go the extra mile.</p><a className="text-link" href={`mailto:${contactEmail}`}>Start a conversation <span aria-hidden="true">↗</span></a></div>
+        <div className="capabilities"><p className="eyebrow">Core toolkit</p><ul>{skills.slice(0, 5).map((skill, index) => <li key={skill}><span>0{index + 1}</span> {skill}</li>)}</ul></div>
+      </section>
+
+      <section className="resume-section" id="resume" aria-label="Printable resume">
+        <div className="resume-header"><div><p className="resume-kicker">Resume · Updated 2026</p><h2>William Brandi</h2><p>Self-taught web, app, and software developer</p></div><div className="resume-contact"><a href={`mailto:${contactEmail}`}>{contactEmail}</a><a href={linkedInUrl} target="_blank" rel="noreferrer">linkedin.com/in/william-brandi-7132a7206</a><span>Aberdeen, Maryland</span></div></div>
+        <div className="resume-grid"><div><h3>Profile</h3><p>Self-taught developer learning since 2018 and building since 2021. Founder and lead developer of RNDM Junk LLC, creating practical web and app experiences with persistence, creativity, and a willingness to solve the next problem.</p><h3>Skills</h3><p>{skills.join(' · ')}</p></div><div><h3>Experience</h3><div className="resume-jobs">{experience.map((job) => <div className="resume-job" key={`resume-${job.company}-${job.role}`}><strong>{job.role}</strong><span>{job.company} · {job.date}</span></div>)}</div></div></div>
       </section>
 
       <footer className="site-footer"><span>William Brandi © 2026</span><span>Built with curiosity and a little stubbornness.</span><a href="https://www.linkedin.com/in/william-brandi-7132a7206/" target="_blank" rel="noreferrer">LinkedIn ↗</a></footer>
